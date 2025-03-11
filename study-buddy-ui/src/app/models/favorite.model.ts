@@ -2,6 +2,7 @@ export interface FavoriteQAInterface {
     favoriteId: number;
     userId: string;
     questionId: number;
+    toggleAnswer: boolean;
     question: QuestionAnswerInterface ;
   }
   export interface QuestionAnswerInterface {

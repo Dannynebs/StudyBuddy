@@ -1,14 +1,14 @@
-<div>
+<div class="cards-div">
     <h2>Questions</h2>
     <ul class="grid-div">
-      <li *ngFor="let question of QaList">
+      <li *ngFor="let question of QaList let i = index">
         <div class="container">
           <div class="card">
             <div class="front">
-              <span>Q: {{ question.question }}</span>
+              <span>Q[{{ i + 1 }}]: {{ question.question }}</span>
             </div>
             <div class="back">
-              <span>A: {{ question.answer }}</span>
+              <span>A[{{ i + 1 }}]: {{ question.answer }}</span>
             </div>
           </div>
         </div>

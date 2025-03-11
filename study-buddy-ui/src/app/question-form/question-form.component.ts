@@ -5,28 +5,26 @@ import { ApiService } from '../api.service';
 import { QuestionAnswer } from '../models/question-answer';
 @Component({
   selector: 'app-question-form',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './question-form.component.html',
-  styleUrl: './question-form.component.css'
+  styleUrl: './question-form.component.css',
 })
 export class QuestionFormComponent {
   QuestionAnswerList: QuestionAnswer[] = [];
-question: QuestionAnswer = {} as QuestionAnswer;
+  question: QuestionAnswer = {} as QuestionAnswer;
 
-constructor(private apiService: ApiService){}
+  constructor(private apiService: ApiService) {}
 
-newQuestion(addQuestion: any): void {
-  if (!addQuestion.question.trim() || !addQuestion.answer.trim()) {
-    console.error('Both question and answer are required');
-    return;
+  newQuestion(addQuestion: any) {
+    if (!addQuestion.question.trim() || !addQuestion.answer.trim()) {
+      console.error('Both question and answer are required');
+      return;
+    }
+    this.apiService.addQuestionAnswer(addQuestion).subscribe((res) => {
+      console.log(res);
+      this.QuestionAnswerList.push(res as any);
+      addQuestion.question = '';
+      addQuestion.answer = '';
+    });
   }
-  this.apiService.addFavorite(addQuestion).subscribe((res) => {
-    console.log(res);
-    this.QuestionAnswerList.push(res as any);
-    addQuestion.question = '';
-    addQuestion.answer = '';
-  });
-}
-
-
 }

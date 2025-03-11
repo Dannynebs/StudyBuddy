@@ -19,7 +19,7 @@ export class ApiService {
   getQuestionById(id: number){
     this.http.get(`${this.baseUrl}/Qas/${id}`)
   }
-  addQuestionAnswer(question: QuestionAnswer){
+  addQuestionAnswer(question: string){
     return this.http.post(`${this.baseUrl}/Qas`,question)
   }
   editQuestionAnswer(id: number, question: QuestionAnswer){

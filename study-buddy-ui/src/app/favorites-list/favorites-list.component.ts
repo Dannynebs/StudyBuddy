@@ -13,15 +13,42 @@ import { FavoriteQAInterface } from '../models/favorite.model';
 })
 export class FavoritesListComponent  implements OnInit{
     
-  favoritesList: FavoriteQAInterface[]=[];
+  favoriteList: FavoriteQAInterface[]=[];
+  FavoritesListResult: FavoriteQAInterface[] = [];
+  QuestionsAnswersList: QuestionAnswer[] = [];
+  FavoriteQuestion: FavoriteQAInterface = {} as FavoriteQAInterface;
+  Question: QuestionAnswer = {} as QuestionAnswer;
+  toggleAnswer: boolean = false;
+
   userId = '11111' //Place holder
 
   constructor(private apiService: ApiService){}
 
   ngOnInit(): void {
     this.apiService.getFavorites().subscribe((data) => {
-      this.favoritesList = data as any[];
+      this.favoriteList = data as any[];
     })
   }
+  newFavorite(addFavorite: any) {
+    if (!addFavorite.questionId.trim() || !addFavorite.userId.trim()) {
+      console.error('Both question and answer are required');
+      return;
+    }
+    this.apiService.addFavorite(addFavorite).subscribe((res) => {
+      console.log(res);
+      this.favoriteList.push(res as any);
+      addFavorite.questionId = '';
+      addFavorite.userId = '';
+    });
+  }
+  ShowFavorites() {
+    this.apiService.getFavorites().subscribe((res) => {
+      console.log(res);
+      this.FavoritesListResult = res as any[];
+    });
+  }
     
+  showAnswer(question: any): void {
+    question.toggleAnswer = !question.toggleAnswer;
+  }
 }

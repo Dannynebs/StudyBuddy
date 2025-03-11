@@ -2,9 +2,15 @@
     display: grid;
     grid-template-columns: auto auto;
   }
+.cards-div{
+  margin-top: 131px;
+}
+
   h2 {
     display: flex;
     justify-content: center;
+    padding-top: 15px;
+    color: white;
   }
   
   li {
@@ -12,7 +18,7 @@
   }
   .container {
     margin: 20px;
-    /* width: 300px; */
+    width: 400px;
     height: 200px;
     perspective: 800px;
   }
@@ -41,14 +47,11 @@
     backface-visibility: hidden;
   }
   .front {
-    /* background-image: url(https://source.unsplash.com/random/350x500); */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #a3a3e9;
-    /* color: rgb(235, 224, 224); */
-    /* gap: 2rem; */
+    background-color: #cbcbc9;
   }
   span {
     padding: 25px;

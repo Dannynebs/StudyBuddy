@@ -1,14 +1,19 @@
 <div class="main">
     <div class="header">
       <h1>BootCamp Study Buddy</h1>
-      <nav>
-        <a routerLink="/question">Question</a>
-        <a routerLink="/favoriteList">Favorite List</a>
-        <a routerLink="/qaform">Add Question</a>
-      </nav>
+      <div class="side-bar-container">
+        <i class="fa-solid fa-bars"></i>
+        <div class="side-bar-menu">
+          <nav>
+            <a routerLink="/question">Question</a>
+            <a routerLink="/favoriteList">Favorite List</a>
+            <a routerLink="/qaform">Add Question</a>
+          </nav>
+        </div>     
     </div>
-    <div class="body">
+  </div>
+    <div>
         <router-outlet></router-outlet>
     </div>
     
-  </div>
+  
