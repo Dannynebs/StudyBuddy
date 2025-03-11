@@ -11,5 +11,5 @@ public partial class UserFavorite
 
     public int QuestionId { get; set; }
 
-    public virtual Qa Question { get; set; } = null!;
+    public virtual Qa? Question { get; set; }
 }

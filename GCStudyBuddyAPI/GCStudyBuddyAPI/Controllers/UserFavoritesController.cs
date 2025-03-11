@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GCStudyBuddyAPI.Entities;
+using GCStudyBuddyAPI.DTOs;
 
 namespace GCStudyBuddyAPI.Controllers
 {
@@ -22,23 +23,44 @@ namespace GCStudyBuddyAPI.Controllers
 
         // GET: api/UserFavorites
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserFavorite>>> GetUserFavorites()
+        public async Task<ActionResult<IEnumerable<UserFavoriteDTO>>> GetUserFavorites()
         {
-            return await _context.UserFavorites.ToListAsync();
+            var favorites = await _context.UserFavorites.Include(f => f.Question).ToListAsync();
+
+            var favoriteDtos = favorites.Select(f => new UserFavoriteDTO
+            {
+                FavoriteId = f.FavoriteId,
+                UserId = f.UserId,
+                QuestionId = f.QuestionId,
+               Question = new QaDTO
+               {
+                   Id= f.FavoriteId,
+                   Question = f.Question!.Question,
+                   Answer = f.Question.Answer,
+               }
+            }).ToList();
+
+            return Ok(favoriteDtos);
         }
 
         // GET: api/UserFavorites/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserFavorite>> GetUserFavorite(int id)
+        public async Task<ActionResult<UserFavoriteDTO>> GetUserFavorite(int id)
         {
-            var userFavorite = await _context.UserFavorites.FindAsync(id);
+            var favoriteQuestion = await _context.Qas.FindAsync(id);
 
-            if (userFavorite == null)
+            if (favoriteQuestion == null)
             {
-                return NotFound();
+                return BadRequest();
             }
+            var questionDto = new QaDTO
+            {
+                Id = id,
+                Question = favoriteQuestion.Question,
+                Answer = favoriteQuestion.Answer
+            };
 
-            return userFavorite;
+            return Ok(questionDto);
         }
 
         // PUT: api/UserFavorites/5
@@ -75,12 +97,28 @@ namespace GCStudyBuddyAPI.Controllers
         // POST: api/UserFavorites
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<UserFavorite>> PostUserFavorite(UserFavorite userFavorite)
+        public async Task<ActionResult<UserFavoriteDTO>> PostUserFavorite(UserFavoriteDTO userFavoriteDto)
         {
-            _context.UserFavorites.Add(userFavorite);
+            if(userFavoriteDto == null)
+            {
+                return BadRequest();
+            }
+
+            var newFavorite = new UserFavorite
+            {
+                UserId = userFavoriteDto.UserId,
+                QuestionId = userFavoriteDto.QuestionId,
+            };
+
+            _context.UserFavorites.Add(newFavorite);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUserFavorite", new { id = userFavorite.FavoriteId }, userFavorite);
+            return CreatedAtAction(nameof(GetUserFavorite), new { id = newFavorite.FavoriteId }, new UserFavoriteDTO
+            {
+                FavoriteId = newFavorite.FavoriteId,
+                UserId = newFavorite.UserId,
+                QuestionId = newFavorite.QuestionId,
+            });
         }
 
         // DELETE: api/UserFavorites/5

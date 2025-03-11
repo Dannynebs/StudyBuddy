@@ -10,6 +10,6 @@ namespace GCStudyBuddyAPI.DTOs
 
         public int QuestionId { get; set; }
 
-        public virtual Qa Question { get; set; } = null!;
+        public virtual QaDTO? Question { get; set; }
     }
 }
