@@ -12,7 +12,7 @@
   }
   .container {
     margin: 20px;
-    width: 300px;
+    /* width: 300px; */
     height: 200px;
     perspective: 800px;
   }
@@ -26,7 +26,7 @@
     width: 100%;
     padding: 10px;
     position: relative;
-    transition: transform 1500ms;
+    transition: transform 3500ms;
     transform-style: preserve-3d;
   }
   .front,

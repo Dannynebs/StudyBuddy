@@ -1,0 +1,17 @@
+.header{
+    background-color: rgb(230, 232, 240);
+}
+h1{
+    display: flex;
+    justify-content: center;
+    padding-top: 20px;
+}
+nav{
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: right;
+}
+a{
+    padding: 5px;
+    text-decoration: none;
+}
