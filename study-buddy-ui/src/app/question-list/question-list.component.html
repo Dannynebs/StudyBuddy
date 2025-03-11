@@ -1,1 +1,17 @@
-<p>question-list works!</p>
+<div>
+    <h2>Questions</h2>
+    <ul class="grid-div">
+      <li *ngFor="let question of QaList">
+        <div class="container">
+          <div class="card">
+            <div class="front">
+              <span>Q: {{ question.question }}</span>
+            </div>
+            <div class="back">
+              <span>A: {{ question.answer }}</span>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>

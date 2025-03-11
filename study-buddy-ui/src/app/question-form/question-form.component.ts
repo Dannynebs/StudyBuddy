@@ -10,17 +10,22 @@ import { QuestionAnswer } from '../models/question-answer';
   styleUrl: './question-form.component.css'
 })
 export class QuestionFormComponent {
-question: QuestionAnswer = {id: 0, question: '', answer: ''};
+  QuestionAnswerList: QuestionAnswer[] = [];
+question: QuestionAnswer = {} as QuestionAnswer;
 
 constructor(private apiService: ApiService){}
 
-submitQuestion(): void {
-  if(this.question.id){
-    this.apiService.editQuestionAnswer(this.question.id,this.question).subscribe();
+newQuestion(addQuestion: any): void {
+  if (!addQuestion.question.trim() || !addQuestion.answer.trim()) {
+    console.error('Both question and answer are required');
+    return;
   }
-  else{
-    this.apiService.addQuestionAnswer(this.question).subscribe();
-  }
+  this.apiService.addFavorite(addQuestion).subscribe((res) => {
+    console.log(res);
+    this.QuestionAnswerList.push(res as any);
+    addQuestion.question = '';
+    addQuestion.answer = '';
+  });
 }
 
 

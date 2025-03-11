@@ -1,1 +1,27 @@
-<p>question-form works!</p>
+<div class="container">
+    <div class="left-column">
+  <form #questionForm="ngForm">
+      <h4>Add a Question To the Study List</h4>
+      <input
+        type="text"
+        [(ngModel)]="question.question"
+        name="question"
+        placeholder="Question"
+        required
+      />
+      <br />
+      <input
+        type="text"
+        [(ngModel)]="question.answer"
+        name="answers"
+        placeholder="Answer"
+        required
+      />
+      &nbsp;
+      <button class="btn btn-outline-dark btn-sm" (click)="newQuestion(question)" [disabled]="questionForm.invalid">
+        Add Question
+      </button>
+      <p class="disclaimer" *ngIf="questionForm.invalid">* Both fields are required.</p>
+    </form>
+    <br />
+  </div>

@@ -1,1 +1,20 @@
-<p>favorites-list works!</p>
+<div>
+    <h2>Favorite Questions</h2>
+    <ul class="grid-div">
+      <li *ngFor="let question of favoritesList">
+        <div class="container">
+          <div class="card">
+            <!-- <div class="front">
+                <span>UserId: {{ question.userId}}</span>
+              </div> -->
+            <div class="front">
+              <span>Q: {{ question.question.question }}</span>
+            </div>
+            <div class="back">
+              <span>A: {{ question.question.answer}}</span>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
